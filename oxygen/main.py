@@ -15,7 +15,7 @@ def main() -> None:
     buffer = file.load(arguments.file)
     def _main(screen: Any) -> None:
         window_ = window.Window(curses.LINES - 1, curses.COLS - 1)
-        cursor_ = cursor.Cursor()
+        cursor_ = cursor.Cursor(buffer)
         while True:
             screen.erase()
             for x, y in enumerate(buffer[:window_.rows]):
