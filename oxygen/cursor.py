@@ -4,18 +4,23 @@ class Cursor:
         self.column = column
         self.buffer = buffer
 
-    def up(self):
+    def up(self) -> None:
         if self.row > 0:
             self.row -= 1
+            self._clamp()
 
-    def down(self):
+    def down(self) -> None:
         if self.row < len(self.buffer) - 1:
             self.row += 1
+            self._clamp()
 
-    def left(self):
+    def left(self) -> None:
         if self.column > 0:
             self.column -= 1
 
-    def right(self):
+    def right(self) -> None:
         if self.column < len(self.buffer[self.row]):
             self.column += 1
+
+    def _clamp(self) -> None:
+        self.column = min(self.column, len(self.buffer[self.row]))
