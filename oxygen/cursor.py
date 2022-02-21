@@ -1,8 +1,17 @@
 class Cursor:
     def __init__(self, buffer: list, row: int = 0, column: int = 0) -> None:
         self.row = row
-        self.column = column
+        self._column = column
         self.buffer = buffer
+        self._hint = column
+
+    @property
+    def column(self) -> int:
+        return self._column
+
+    @column.setter
+    def column(self, column: int) -> None:
+        self._column = self._hint = column
 
     def up(self) -> None:
         if self.row > 0:
@@ -23,4 +32,4 @@ class Cursor:
             self.column += 1
 
     def _clamp(self) -> None:
-        self.column = min(self.column, len(self.buffer[self.row]))
+        self._column = min(self._hint, len(self.buffer[self.row]))
