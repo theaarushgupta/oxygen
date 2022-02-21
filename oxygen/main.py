@@ -5,17 +5,19 @@ import argparse
 from oxygen import file
 from oxygen import window
 from oxygen import cursor
-
-from typing import Any
+from oxygen import color
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("file")
     arguments = parser.parse_args()
     buffer = file.load(arguments.file)
-    def _main(screen: Any) -> None:
+    def _main(screen: "curses._CursesWindow") -> None:
         window_ = window.Window(curses.LINES - 1, curses.COLS - 1)
         cursor_ = cursor.Cursor(buffer)
+        color_ = color.Color(screen)
+        colorscheme = color_.create(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
+        color_.apply(colorscheme)
         while True:
             screen.erase()
             for x, y in enumerate(buffer[:window_.rows]):
