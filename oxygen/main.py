@@ -21,6 +21,10 @@ def main() -> None:
         while True:
             screen.erase()
             for row, line in enumerate(buffer[window_.row:window_.row + window_.rowCount]):
+                if row == cursor_.row - window_.row and window_.column > 0:
+                    line = "«" + line[window_.column + 1:]
+                if len(line) > window_.columnCount:
+                    line = line[:window_.columnCount - 1] + "»"
                 screen.addstr(row, 0, line)
             screen.move(*window_.translate())
             key = screen.getkey()
@@ -29,13 +33,17 @@ def main() -> None:
             elif key == "KEY_UP":
                 cursor_.up()
                 window_.up()
+                window_.horizontalScroll()
             elif key == "KEY_DOWN":
                 cursor_.down()
                 window_.down()
+                window_.horizontalScroll()
             elif key == "KEY_LEFT":
                 cursor_.left()
                 window_.up()
+                window_.horizontalScroll()
             elif key == "KEY_RIGHT":
                 cursor_.right()
                 window_.down()
+                window_.horizontalScroll()
     curses.wrapper(_main)

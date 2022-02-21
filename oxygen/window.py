@@ -31,3 +31,7 @@ class Window:
 
     def translate(self) -> tuple:
         return self.cursor.row - self.row, self.cursor.column - self.column
+
+    def horizontalScroll(self, left: int = 5, right: int = 5) -> None:
+        pages = self.cursor.column // (self.columnCount - right)
+        self.column = max(pages * self.columnCount - right - left, 0)
