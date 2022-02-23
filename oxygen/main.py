@@ -1,4 +1,5 @@
 import curses
+import curses.ascii
 import sys
 import argparse
 
@@ -65,12 +66,17 @@ class Oxygen:
                 self.right()
 
     def keypress(self) -> None:
-        key = self.screen.getkey()
-        if key == "q": self._exit()
-        elif key == "KEY_UP": self.up()
-        elif key == "KEY_DOWN": self.down()
-        elif key == "KEY_LEFT": self.left()
-        elif key == "KEY_RIGHT": self.right()
+        key = self.screen.getch()
+        if curses.ascii.isctrl(key):
+            key = curses.unctrl(key).decode("ascii")[1:].lower()
+            key = f"C-{key}"
+        else:
+            key = curses.unctrl(key).decode("ascii")
+        if key == "C-q": self._exit()
+        elif key == "C-w": self.up()
+        elif key == "C-s": self.down()
+        elif key == "C-a": self.left()
+        elif key == "C-d": self.right()
         else: self.insert(key)
 
     def entry(self) -> None:
