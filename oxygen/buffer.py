@@ -19,3 +19,9 @@ class Buffer:
         current = self.lines.pop(row)
         new = current[:column] + string + current[column:]
         self.lines.insert(row, new)
+
+    def newline(self, cursor_: Any) -> None:
+        row, column = cursor_.row, cursor_.column
+        current = self.lines.pop(row)
+        self.lines.insert(row, current[:column])
+        self.lines.insert(row + 1, current[column:])

@@ -50,9 +50,13 @@ class Oxygen:
         self.window.horizontalScroll()
 
     def insert(self, key: str) -> None:
-        self.buffer.insert(self.cursor, key)
-        for _ in key:
+        if key == "\n":
+            self.buffer.newline(self.cursor)
             self.right()
+        else:
+            self.buffer.insert(self.cursor, key)
+            for _ in key:
+                self.right()
 
     def keypress(self) -> None:
         key = self.screen.getkey()
