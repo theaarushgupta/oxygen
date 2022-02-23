@@ -1,3 +1,5 @@
-def load(filename: str) -> list:
+from oxygen import buffer
+
+def load(filename: str) -> buffer.Buffer:
     with open(filename) as file:
-        return file.readlines()
+        return buffer.Buffer(file.readlines())

@@ -1,16 +1,17 @@
+from oxygen import buffer
 from oxygen import cursor
 
 class Window:
     def __init__(
         self,
-        buffer: list,
+        buffer_: buffer.Buffer,
         cursor_: cursor.Cursor,
         rowCount: int,
         columnCount: int,
         row: int = 0,
         column: int = 0
     ) -> None:
-        self.buffer = buffer
+        self.buffer = buffer_
         self.cursor = cursor_
         self.rowCount = rowCount
         self.columnCount = columnCount
@@ -26,7 +27,7 @@ class Window:
             self.row -= 1
 
     def down(self) -> None:
-        if self.cursor.row == self.bottom + 1 and self.bottom < len(self.buffer) - 1:
+        if self.cursor.row == self.bottom + 1 and self.bottom < self.buffer.bottom:
             self.row += 1
 
     def translate(self) -> tuple:

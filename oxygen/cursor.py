@@ -1,8 +1,10 @@
+from oxygen import buffer
+
 class Cursor:
-    def __init__(self, buffer: list, row: int = 0, column: int = 0) -> None:
+    def __init__(self, buffer_: buffer.Buffer, row: int = 0, column: int = 0) -> None:
         self.row = row
         self._column = column
-        self.buffer = buffer
+        self.buffer = buffer_
         self._hint = column
 
     @property
@@ -19,7 +21,7 @@ class Cursor:
             self._clamp()
 
     def down(self) -> None:
-        if self.row < len(self.buffer) - 1:
+        if self.row < self.buffer.bottom:
             self.row += 1
             self._clamp()
 
@@ -33,7 +35,7 @@ class Cursor:
     def right(self) -> None:
         if self.column < len(self.buffer[self.row]):
             self.column += 1
-        elif self.row < len(self.buffer) - 1:
+        elif self.row < self.buffer.bottom:
             self.row += 1
             self.column = 0
 
