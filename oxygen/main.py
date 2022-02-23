@@ -3,7 +3,6 @@ import sys
 import argparse
 
 from oxygen import file
-from oxygen import buffer
 from oxygen import window
 from oxygen import cursor
 from oxygen import color
