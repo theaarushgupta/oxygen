@@ -53,6 +53,12 @@ class Oxygen:
         if key == "\n":
             self.buffer.newline(self.cursor)
             self.right()
+        elif key in ("KEY_DC", "KEY_DELETE", "\x04"):
+            self.buffer.delete(self.cursor)
+        elif key in ("KEY_BACKSPACE", "\x7f"):
+            if (self.cursor.row, self.cursor.column) > (0, 0):
+                self.left()
+                self.buffer.delete(self.cursor)
         else:
             self.buffer.insert(self.cursor, key)
             for _ in key:
